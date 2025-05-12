@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Key : Interactable
 {
+
+    [SerializeField] private AudioClip _onPickUpSound;
     protected override void Interact()
     {
-
-        Debug.Log("Key Interacted");
-
+        base.Interact();
+        if (CanInteract) {
+            //play sound
+            AudioSource.PlayClipAtPoint(_onPickUpSound, transform.position);
+            //destroy gameobject
+        }
     }
+
+
 }

@@ -50,21 +50,38 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        // arah forward/right berdasarkan rotasi player
         Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
+        Vector3 right   = transform.TransformDirection(Vector3.right);
 
+        // kecepatan input
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical");
-        float curSpeedY = (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal");
+        float speed    = isRunning ? runningSpeed : walkingSpeed;
+        float curX     = speed * Input.GetAxis("Vertical");
+        float curZ     = speed * Input.GetAxis("Horizontal");
 
-        if (!characterController.isGrounded)
+        // ambil dulu nilai vertikal lama
+        float yVel = moveDirection.y;
+
+        // jika grounded, reset vertical speed (bisa kecil negatif agar selalu menempel)
+        if (characterController.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            yVel = -1f;
+        }
+        else
+        {
+            // jika di udara, kurangi gravitasi
+            yVel -= gravity * Time.deltaTime;
         }
 
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        // bangun moveDirection baru: gunakan komponen horizontal dari input, dan yVel
+        Vector3 horizontalMove = forward * curX + right * curZ;
+        moveDirection = new Vector3(horizontalMove.x, yVel, horizontalMove.z);
+
+        // akhirnya gerakkan karakter
         characterController.Move(moveDirection * Time.deltaTime);
     }
+
 
     private void HandleRotation()
     {

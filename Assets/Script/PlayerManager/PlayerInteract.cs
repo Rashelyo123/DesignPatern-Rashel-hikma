@@ -33,7 +33,7 @@ public class PlayerInteract : MonoBehaviour
                 playerUI.UpdateText(interactable.PromptMessage);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    interactable.BaseInteracr();
+                    interactable.BaseInteract();
                 }
 
             }
