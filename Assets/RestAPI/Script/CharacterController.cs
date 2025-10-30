@@ -205,7 +205,7 @@ public class PlayerEndlessRunner : MonoBehaviour
         Debug.Log("Game Over!");
         FindObjectOfType<CameraEffects>().TriggerShake(0.3f, 0.4f);
 
-
+            
         GameUIManager.ShowGameOver();
     }
 

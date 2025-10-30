@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using RestAPI.Script;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +16,7 @@ public class UI_Handle : MonoBehaviour
     }
     public void ShowGameOver()
     {
-
+        SaveSystem.Instance.SaveHighScore();
         gameOverUI.SetActive(true);
 
     }

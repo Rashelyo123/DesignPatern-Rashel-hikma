@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
+    public string playerName = "Player";
     public float score;
 
     public float scorePerSecond = 10f;
