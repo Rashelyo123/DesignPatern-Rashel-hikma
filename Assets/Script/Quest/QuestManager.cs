@@ -54,8 +54,7 @@
                 currentQuest.CompleteQuest();
                 OnQuestComplete?.Invoke();
             }
-
-
+            
             int currentIndex = quests.IndexOf(currentQuest);
             if (currentIndex < quests.Count - 1) {
                 currentQuest = quests[currentIndex + 1];

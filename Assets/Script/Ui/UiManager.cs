@@ -27,7 +27,7 @@
 
         }
 
-        private void InitNewTrackQuest()
+        private void InitNewTrackQue*st()
         {
             currentQuest = _questManager.CurrentQuest;
             if (currentQuest != null) {
