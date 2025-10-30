@@ -16,6 +16,7 @@ public class UI_Handle : MonoBehaviour
     }
     public void ShowGameOver()
     {
+        ScoreManager.instance.StopScore();
         SaveSystem.Instance.SaveHighScore();
         gameOverUI.SetActive(true);
 
