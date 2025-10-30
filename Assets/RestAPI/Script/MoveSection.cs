@@ -1,27 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveSection : MonoBehaviour
 {
+    bool isMove = true;
 
-    public float Speed = -7;
-    bool IsMove = true;
     void Update()
     {
-        if (IsMove)
-        {
-            transform.position += new Vector3(0, 0, Speed) * Time.deltaTime;
+        if (!isMove) return;
 
-        }
+
+        float currentSpeed = DifficultyManager.Instance.baseSpeed;
+
+
+        transform.position += new Vector3(0, 0, currentSpeed) * Time.deltaTime;
     }
 
-    public void NotMove()
-    {
-        IsMove = false;
-    }
-    public void Move()
-    {
-        IsMove = true;
-    }
+    public void NotMove() => isMove = false;
+    public void Move() => isMove = true;
 }

@@ -27,7 +27,8 @@ public class PlayerEndlessRunner : MonoBehaviour
     public HitX hitX = HitX.None;
     public HitY hitY = HitY.None;
     public HitZ hitZ = HitZ.None;
-    // public Animator anim; // 🔸 dikomentari sementara
+    // public Animator anim; // 
+    [SerializeField] private UI_Handle GameUIManager;
 
     void Start()
     {
@@ -199,9 +200,15 @@ public class PlayerEndlessRunner : MonoBehaviour
     public void Die()
     {
         AudioEventSystem.PlayAudio("Die");
-        // anim.SetBool("IsDead", true);
-        // GameManager.instance.StopGame();
+        DifficultyManager.Instance.baseSpeed = 0f;
+        FindObjectOfType<MoveSection>().NotMove();
+        Debug.Log("Game Over!");
+        FindObjectOfType<CameraEffects>().TriggerShake(0.3f, 0.4f);
+
+
+        GameUIManager.ShowGameOver();
     }
+
 
     public void Life()
     {

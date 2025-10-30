@@ -6,7 +6,9 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI coinText;
     public float score;
+
     public float scorePerSecond = 10f;
     public int coinScore = 10;
     private bool isRunning = true;
@@ -25,8 +27,9 @@ public class ScoreManager : MonoBehaviour
     public void AddCoin()
     {
         score += coinScore;
-        scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
+        coinText.text = "Coins: " + Mathf.FloorToInt(score).ToString();
     }
+
     public void StopScore()
     {
         isRunning = false;

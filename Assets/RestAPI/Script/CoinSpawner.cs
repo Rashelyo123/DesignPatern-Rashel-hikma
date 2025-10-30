@@ -3,29 +3,94 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     public GameObject coinPrefab;
-    public int coinCount = 10;    // jumlah koin per baris
-    public float spacing = 2f;    // jarak antar koin
-    public float height = 1.5f;   // tinggi koin dari permukaan track
+    public int coinCount = 10;
+    public float spacing = 2f;
+    public float baseHeight = 1.5f;
 
-    float[] lanePositions = { -2f, 0f, 2f }; // posisi x sesuai jalur player
+
+    float[] laneOffsets = { 2f, 4.3f, 6.6f };
+
+
 
     public void SpawnCoins(Transform parentTrack)
     {
-        GameObject coinPrefabToUse = coinPrefab;
-        if (coinPrefabToUse == null) return;
 
-        // posisi awal relatif terhadap track
-        Vector3 startPos = parentTrack.position + new Vector3(0, 1.5f, 0);
-        float[] lanePositions = { -2f, 0f, 2f };
+        int patternType = Random.Range(0, 4);
+        Vector3 trackPos = parentTrack.position;
 
-        float laneX = lanePositions[Random.Range(0, lanePositions.Length)];
+        switch (patternType)
+        {
+            case 0:
+                SpawnStraight(parentTrack, trackPos);
+                break;
+            case 1:
+                SpawnZigzag(parentTrack, trackPos);
+                break;
+            case 2:
+                SpawnJumpArc(parentTrack, trackPos);
+                break;
+            case 3:
+                SpawnMixedPattern(parentTrack, trackPos);
+                break;
+        }
+
+
+    }
+
+
+    void SpawnStraight(Transform parentTrack, Vector3 trackPos)
+    {
+        float laneX = laneOffsets[Random.Range(0, laneOffsets.Length)];
 
         for (int i = 0; i < coinCount; i++)
         {
-            Vector3 coinPos = startPos + new Vector3(laneX, 0, i * spacing);
-            GameObject coin = Instantiate(coinPrefabToUse, coinPos, Quaternion.identity);
-            coin.transform.SetParent(parentTrack); // biar koin ikut gerak bareng track
+            Vector3 coinPos = new Vector3(trackPos.x + laneX, trackPos.y + baseHeight, trackPos.z + i * spacing);
+            Instantiate(coinPrefab, coinPos, Quaternion.identity, parentTrack);
         }
     }
 
+
+    void SpawnZigzag(Transform parentTrack, Vector3 trackPos)
+    {
+        int direction = Random.value > 0.5f ? 1 : -1;
+        float laneX = laneOffsets[direction == 1 ? 0 : laneOffsets.Length - 1];
+
+        for (int i = 0; i < coinCount; i++)
+        {
+
+            if (i % 3 == 0)
+            {
+                laneX = laneOffsets[Random.Range(0, laneOffsets.Length)];
+            }
+
+            Vector3 coinPos = new Vector3(trackPos.x + laneX, trackPos.y + baseHeight, trackPos.z + i * spacing);
+            Instantiate(coinPrefab, coinPos, Quaternion.identity, parentTrack);
+        }
+    }
+
+
+    void SpawnJumpArc(Transform parentTrack, Vector3 trackPos)
+    {
+        float laneX = laneOffsets[Random.Range(0, laneOffsets.Length)];
+
+        for (int i = 0; i < coinCount; i++)
+        {
+
+            float heightOffset = Mathf.Sin((float)i / coinCount * Mathf.PI) * 3f;
+            Vector3 coinPos = new Vector3(trackPos.x + laneX, trackPos.y + baseHeight + heightOffset, trackPos.z + i * spacing);
+            Instantiate(coinPrefab, coinPos, Quaternion.identity, parentTrack);
+        }
+    }
+
+
+    void SpawnMixedPattern(Transform parentTrack, Vector3 trackPos)
+    {
+        for (int i = 0; i < coinCount; i++)
+        {
+            float laneX = laneOffsets[Random.Range(0, laneOffsets.Length)];
+            float heightOffset = Mathf.Sin(i * 0.5f) * 2f;
+            Vector3 coinPos = new Vector3(trackPos.x + laneX, trackPos.y + baseHeight + heightOffset, trackPos.z + i * spacing);
+            Instantiate(coinPrefab, coinPos, Quaternion.identity, parentTrack);
+        }
+    }
 }

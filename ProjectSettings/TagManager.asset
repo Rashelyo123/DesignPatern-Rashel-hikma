@@ -6,6 +6,8 @@ TagManager:
   tags:
   - TriggerLevel
   - Obstacle
+  - Coin
+  - Track
   layers:
   - Default
   - TransparentFX
