@@ -33,7 +33,7 @@ public class ProceduralGenerateLevel : MonoBehaviour
             if (selectedTrack != null)
             {
 
-                GameObject newTrack = Instantiate(selectedTrack, new Vector3(-4.3f, 1.1f, 107.6f), selectedTrack.transform.rotation);
+                GameObject newTrack = Instantiate(selectedTrack, new Vector3(-11.7f, -1f, 218.1822f), selectedTrack.transform.rotation);
 
 
                 if (coinSpawner != null)

@@ -8,33 +8,29 @@ public class CoinSpawner : MonoBehaviour
     public float baseHeight = 1.5f;
 
 
-    float[] laneOffsets = { 2f, 4.3f, 6.6f };
+    // Tambahkan kompensasi X agar sejajar dengan jalan
+    public float trackCenterOffsetX = 12f; // sesuaikan dengan posisi pivot lintasan kamu
 
-
+    float[] laneOffsets = { -2.5f, 0f, 2.5f };
 
     public void SpawnCoins(Transform parentTrack)
     {
-
-        int patternType = Random.Range(0, 4);
         Vector3 trackPos = parentTrack.position;
 
-        switch (patternType)
+        // 🔹 Tambahkan offset ke kanan sebesar trackCenterOffsetX
+        float baseX = trackPos.x + trackCenterOffsetX;
+        float laneX = laneOffsets[Random.Range(0, laneOffsets.Length)];
+
+        for (int i = 0; i < coinCount; i++)
         {
-            case 0:
-                SpawnStraight(parentTrack, trackPos);
-                break;
-            case 1:
-                SpawnZigzag(parentTrack, trackPos);
-                break;
-            case 2:
-                SpawnJumpArc(parentTrack, trackPos);
-                break;
-            case 3:
-                SpawnMixedPattern(parentTrack, trackPos);
-                break;
+            Vector3 coinPos = new Vector3(
+                baseX + laneX,
+                trackPos.y + baseHeight,
+                trackPos.z + i * spacing
+            );
+
+            Instantiate(coinPrefab, coinPos, Quaternion.identity, parentTrack);
         }
-
-
     }
 
 

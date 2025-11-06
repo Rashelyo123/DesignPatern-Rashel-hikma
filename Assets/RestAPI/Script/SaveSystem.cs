@@ -13,7 +13,7 @@
 
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private string getBestURL = "https://yourserver.com/api/get_best_score.php";
-        [SerializeField] private string postURL    = "https://yourserver.com/api/save_score.php";
+        [SerializeField] private string postURL = "https://yourserver.com/api/save_score.php";
         [SerializeField] private string _secretKey = "pens";
 
         private void Awake()
@@ -32,7 +32,7 @@
         private IEnumerator SaveHighScoreSmart()
         {
             string username = UserManager.Instance.playerName;
-            int localScore  = Mathf.FloorToInt(scoreManager.score);
+            int localScore = Mathf.FloorToInt(scoreManager.score);
 
             // 1) GET best score di server
             string hashGet = GetMD5(username + _secretKey);

@@ -6,10 +6,11 @@ public class PlayerCollected : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Coin"))
+        if (other.CompareTag("Coin"))
         {
             ScoreManager.instance.AddCoin();
             Destroy(other.gameObject);
         }
+
     }
 }
