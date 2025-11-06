@@ -28,6 +28,14 @@ public class UI_Handle : MonoBehaviour
         }
     }
 
+    public void GameOverBackmenu(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1f;
+        GameSaveSystem.DeleteSave();
+
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;

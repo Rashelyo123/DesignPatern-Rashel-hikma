@@ -8,12 +8,14 @@ public class MainMenuUI : MonoBehaviour
     void Start()
     {
         continueButton.SetActive(GameSaveSystem.HasSave());
+        Time.timeScale = 1f;
     }
 
     public void NewGame()
     {
         GameSaveSystem.DeleteSave();
         SceneManager.LoadScene("GamePlay");
+        Time.timeScale = 1f;
     }
 
     public void ContinueGame()
